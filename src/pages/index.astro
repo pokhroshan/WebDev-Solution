@@ -1,8 +1,14 @@
 ---
-import Layout from "@/layouts/Layout.astro";
-import TypographyTest from "@components/TypographyTest.astro";
+// src/pages/index.astro
+import Layout from '../layouts/Layout.astro';
+import ProgramCard from '../components/ProgramCard.astro';
+import programs from '../data/program-data.json'; // Direct import
 ---
 
-<Layout>
-  <TypographyTest />
+<Layout title="Confederation College Programs">
+  <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+    {programs.map(program => (
+      <ProgramCard program={program} />
+    ))}
+  </div>
 </Layout>

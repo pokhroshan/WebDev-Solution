@@ -1,0 +1,22 @@
+---
+// src/components/ProgramCard.astro
+const { program } = Astro.props;
+const baseUrl = 'https://www.confederationcollege.ca/programs/';
+---
+
+<article class="mb-8 p-6 bg-white rounded-lg shadow-md">
+  <h2 class="text-xl font-bold mb-2">{program.name}</h2>
+  
+  <p class="mb-4 text-gray-600">
+    {program.missionStatement || 'No description yet.'}
+  </p>
+  
+  <a 
+    href={`${baseUrl}${program.slug.current}`} 
+    class="text-blue-600 hover:underline"
+    target="_blank"
+    rel="noopener noreferrer"
+  >
+    View Program Details →
+  </a>
+</article>
