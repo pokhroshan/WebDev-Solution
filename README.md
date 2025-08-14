@@ -39,7 +39,7 @@ A static one-page site displaying programs from Confederation College, built wit
 ## Deployment
 
 - Deployed on Netlify: [Live Site](https://legendary-cuchufli-058582.netlify.app/)
-- GitHub Repository: [Your Repo Link Here]
+- GitHub Repository: [Github Repo](https://github.com/pokhroshan/WebDev-Solution)
 
 ## Time Spent
 
