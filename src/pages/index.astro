@@ -2,13 +2,93 @@
 // src/pages/index.astro
 import Layout from '../layouts/Layout.astro';
 import ProgramCard from '../components/ProgramCard.astro';
-import programs from '../data/program-data.json'; // Direct import
+import programs from '../data/program-data.json';
 ---
 
 <Layout title="Confederation College Programs">
-  <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-    {programs.map(program => (
-      <ProgramCard program={program} />
-    ))}
-  </div>
+  <main class="container mx-auto px-4 py-8">
+    <h1 class="text-3xl font-bold mb-8 text-gray-800">Program Offerings</h1>
+    
+    <div id="programs-container" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {programs.map(program => (
+        <ProgramCard program={program} />
+      ))}
+    </div>
+
+    <!-- Pagination Controls -->
+    <div id="pagination-controls" class="flex justify-center mt-8 gap-2"></div>
+  </main>
+
+  <!-- Client-side pagination script -->
+  <script is:inline>
+    document.addEventListener('DOMContentLoaded', () => {
+      let currentPage = 1;
+      const itemsPerPage = 6;
+      const programs = Array.from(document.querySelectorAll('#programs-container > *'));
+      const totalPages = Math.ceil(programs.length / itemsPerPage);
+      const paginationContainer = document.getElementById('pagination-controls');
+
+      function updateDisplay() {
+        const startIdx = (currentPage - 1) * itemsPerPage;
+        const endIdx = startIdx + itemsPerPage;
+        
+        programs.forEach((card, index) => {
+          card.style.display = (index >= startIdx && index < endIdx) ? 'block' : 'none';
+        });
+      }
+
+      function renderPagination() {
+        paginationContainer.innerHTML = '';
+        
+        // Previous Button
+        const prevBtn = document.createElement('button');
+        prevBtn.textContent = 'Previous';
+        prevBtn.className = 'px-4 py-2 bg-white border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 disabled:opacity-50';
+        prevBtn.disabled = currentPage === 1;
+        prevBtn.addEventListener('click', () => {
+          if (currentPage > 1) {
+            currentPage--;
+            updateDisplay();
+            renderPagination();
+          }
+        });
+        paginationContainer.appendChild(prevBtn);
+        
+        // Page Numbers
+        for (let i = 1; i <= totalPages; i++) {
+          const pageBtn = document.createElement('button');
+          pageBtn.textContent = i;
+          pageBtn.className = `px-4 py-2 border rounded-md ${
+            currentPage === i 
+              ? 'bg-blue-600 text-white border-blue-600' 
+              : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'
+          }`;
+          pageBtn.addEventListener('click', () => {
+            currentPage = i;
+            updateDisplay();
+            renderPagination();
+          });
+          paginationContainer.appendChild(pageBtn);
+        }
+        
+        // Next Button
+        const nextBtn = document.createElement('button');
+        nextBtn.textContent = 'Next';
+        nextBtn.className = 'px-4 py-2 bg-white border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 disabled:opacity-50';
+        nextBtn.disabled = currentPage === totalPages;
+        nextBtn.addEventListener('click', () => {
+          if (currentPage < totalPages) {
+            currentPage++;
+            updateDisplay();
+            renderPagination();
+          }
+        });
+        paginationContainer.appendChild(nextBtn);
+      }
+
+      // Initial setup
+      updateDisplay();
+      renderPagination();
+    });
+  </script>
 </Layout>
