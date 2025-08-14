@@ -17,7 +17,7 @@ A static site displaying programs from Confederation College.
 
 ## Deployment
 
-This project is deployed on Netlify at: [INSERT_DEPLOYMENT_URL]
+This project is deployed on Netlify at: https://legendary-cuchufli-058582.netlify.app/
 
 ## Time Spent
 
